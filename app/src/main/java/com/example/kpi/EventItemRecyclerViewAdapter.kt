@@ -2,13 +2,17 @@ package com.example.kpi
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import com.example.kpi.databinding.FragmentItemBinding
 import com.example.kpi.models.EventModel
 
 class EventItemRecyclerViewAdapter(
-    private val values: List<EventModel>
+    private val values: List<EventModel>,
+    private val onEventClickListener: OnEventClickListener
 ) : RecyclerView.Adapter<EventItemRecyclerViewAdapter.EventHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): EventHolder {
@@ -29,7 +33,10 @@ class EventItemRecyclerViewAdapter(
 
     override fun getItemCount(): Int = values.size
 
-    inner class EventHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class EventHolder(binding: FragmentItemBinding) : RecyclerView.ViewHolder(binding.root), OnClickListener {
+        init {
+            itemView.setOnClickListener(this)
+        }
 
         private lateinit var event: EventModel
 
@@ -44,6 +51,10 @@ class EventItemRecyclerViewAdapter(
 
         override fun toString(): String {
             return super.toString() + " '" + contentView.text + "'"
+        }
+
+        override fun onClick(view: View?) {
+            onEventClickListener.onEventClicked(event.id, event.title)
         }
     }
 
