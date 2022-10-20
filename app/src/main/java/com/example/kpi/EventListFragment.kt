@@ -10,14 +10,17 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.example.kpi.core.EventRepositoryViewModelFactory
 
 /**
  * A fragment representing a list of Items.
  */
 class EventListFragment : Fragment() {
-
     private lateinit var recyclerView: RecyclerView
-    private val eventListViewModel: EventListViewModel by viewModels()
+
+    private val eventListViewModel: EventListViewModel by viewModels {
+        EventRepositoryViewModelFactory((requireActivity().application as EventsApplication).repository)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
