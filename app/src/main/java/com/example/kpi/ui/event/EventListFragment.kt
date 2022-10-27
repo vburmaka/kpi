@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.example.kpi.R
+import com.example.kpi.core.EventListRepositoryViewModelFactory
 import com.example.kpi.core.EventRepositoryViewModelFactory
 import com.example.kpi.core.EventsApplication
+import com.example.kpi.models.EventModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import java.util.*
 
@@ -22,10 +26,11 @@ import java.util.*
  */
 class EventListFragment : Fragment(), OnEventClickListener {
     private lateinit var recyclerView: RecyclerView
+    private lateinit var emptyScreenTextView: TextView
     private var onEvenSelectedListener: OnEvenSelectedListener? = null
 
     private val eventListViewModel: EventListViewModel by viewModels {
-        EventRepositoryViewModelFactory((requireActivity().application as EventsApplication).repository)
+        EventListRepositoryViewModelFactory((requireActivity().application as EventsApplication).repository)
     }
 
     private var addEventFAB: FloatingActionButton? = null
@@ -41,6 +46,7 @@ class EventListFragment : Fragment(), OnEventClickListener {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_list, container, false)
         recyclerView = view.findViewById(R.id.newList)
+        emptyScreenTextView = view.findViewById(R.id.emptyScreenTextView)
         recyclerView.layoutManager = LinearLayoutManager(context)
         recyclerView.addItemDecoration(DividerItemDecoration(context,VERTICAL))
         addEventFAB = view.findViewById(R.id.addEventFAB)
@@ -49,12 +55,27 @@ class EventListFragment : Fragment(), OnEventClickListener {
             onEventClicked(UUID.randomUUID(),"")
         }
 
-        updateUI()
         return view
     }
 
-    private fun updateUI(){
-        recyclerView.adapter = EventItemRecyclerViewAdapter(eventListViewModel.events, this)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        eventListViewModel.eventsLiveData.observe(viewLifecycleOwner) {
+            updateUI(it)
+        }
+    }
+
+    private fun updateUI(events: List<EventModel>){
+        if (events.isEmpty()){
+            recyclerView.isVisible = false
+            emptyScreenTextView.isVisible = true
+        } else {
+            recyclerView.isVisible = true
+            emptyScreenTextView.isVisible = false
+        }
+
+        // TODO create fun updateEvents in EventItemRecyclerViewAdapter
+        recyclerView.adapter = EventItemRecyclerViewAdapter(events, this)
     }
 
     override fun onDetach() {

@@ -1,31 +1,54 @@
 package com.example.kpi.data
 
 import android.content.Context
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.Transformations
+import androidx.room.Room
 import com.example.kpi.core.EventRepository
+import com.example.kpi.data.db.DbEvent
+import com.example.kpi.data.db.EventsDatabase
 import com.example.kpi.models.EventModel
 import java.util.*
 
+private const val DATABASE_NAME = "events-db"
 class EventRepositoryImpl(private val context: Context) : EventRepository {
 
     companion object {
         fun getInstance(context: Context): EventRepository = EventRepositoryImpl(context)
     }
 
-    override fun getAllEvents(): List<EventModel> {
-        val events = mutableListOf<EventModel>()
-        for (i in 0 until 100) {
-            val event = EventModel()
-            event.title = "Event #$i"
-            events += event
-        }
-        return events
+    private val db: EventsDatabase = Room.databaseBuilder(
+        context,
+        EventsDatabase::class.java,
+        DATABASE_NAME
+    ).build()
+
+    private val eventDao = db.eventDao()
+
+
+    override fun getAllEvents(): LiveData<List<EventModel>> = Transformations.map(eventDao.getEvents()){
+        it.map { it.toEvent() }
     }
 
-    override fun getEventById(id: UUID): EventModel {
-        TODO("Not yet implemented")
+    override fun getEventById(id: UUID): LiveData<EventModel?> = Transformations.map(eventDao.getEvent(id)){
+        it?.toEvent()
     }
 
-    override fun upDateEventById(id: UUID) {
-        TODO("Not yet implemented")
+    override suspend fun updateEvent(event: EventModel){
+        eventDao.insertEvent(event.toDBEvent())
     }
+
+    private fun DbEvent.toEvent() = EventModel(
+        id = this.id,
+        title = this.title,
+        date = this.date
+    )
+
+    private fun EventModel.toDBEvent() =  DbEvent (
+        id = this.id,
+        title = this.title,
+        date = this.date
+    )
 }
+
+

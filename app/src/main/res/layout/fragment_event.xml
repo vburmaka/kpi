@@ -27,4 +27,11 @@
         android:layout_margin="20dp"
         android:text="@string/date_button_title"/>
 
+    <Button
+        android:id="@+id/saveEventButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="@string/save_ivent_button_label"/>
+
 </LinearLayout>

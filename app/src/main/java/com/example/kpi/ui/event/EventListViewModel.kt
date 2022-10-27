@@ -5,6 +5,6 @@ import com.example.kpi.core.EventRepository
 
 class EventListViewModel(private val repository: EventRepository) : ViewModel() {
 
-    val events = repository.getAllEvents()
+    val eventsLiveData = repository.getAllEvents()
 
 }
