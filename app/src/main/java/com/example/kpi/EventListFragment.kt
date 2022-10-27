@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.example.kpi.core.EventRepositoryViewModelFactory
+import com.example.kpi.core.EventsApplication
 
 /**
  * A fragment representing a list of Items.

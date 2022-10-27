@@ -5,6 +5,7 @@ import com.example.kpi.models.EventModel
 import java.util.*
 
 class EventRepositoryImpl(private val context: Context) : EventRepository {
+
     companion object {
         fun getInstance(context: Context): EventRepository = EventRepositoryImpl(context)
     }

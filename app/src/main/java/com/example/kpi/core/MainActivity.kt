@@ -3,7 +3,6 @@ package com.example.kpi.core
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.kpi.EventListFragment
-import com.example.kpi.EventsApplication
 import com.example.kpi.R
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +18,4 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().add(R.id.fragment_container, fragment).commit()
         }
     }
-
-    fun getRepository() =  (application as EventsApplication).repository
 }
