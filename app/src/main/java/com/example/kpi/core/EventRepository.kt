@@ -1,4 +1,4 @@
-package com.example.kpi
+package com.example.kpi.core
 
 import com.example.kpi.models.EventModel
 import java.util.UUID

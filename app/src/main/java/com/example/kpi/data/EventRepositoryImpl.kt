@@ -1,6 +1,7 @@
-package com.example.kpi
+package com.example.kpi.data
 
 import android.content.Context
+import com.example.kpi.core.EventRepository
 import com.example.kpi.models.EventModel
 import java.util.*
 

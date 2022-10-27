@@ -1,4 +1,4 @@
-package com.example.kpi
+package com.example.kpi.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
+import com.example.kpi.R
 import java.util.*
 
 private const val ARG_PARAM_ID = "param1"

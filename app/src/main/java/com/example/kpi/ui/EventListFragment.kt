@@ -1,5 +1,6 @@
-package com.example.kpi
+package com.example.kpi.ui
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.example.kpi.R
 import com.example.kpi.core.EventRepositoryViewModelFactory
 import com.example.kpi.core.EventsApplication
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -20,12 +22,18 @@ import java.util.*
  */
 class EventListFragment : Fragment(), OnEventClickListener {
     private lateinit var recyclerView: RecyclerView
+    private var onEvenSelectedListener: OnEvenSelectedListener? = null
 
     private val eventListViewModel: EventListViewModel by viewModels {
         EventRepositoryViewModelFactory((requireActivity().application as EventsApplication).repository)
     }
 
     private var addEventFAB: FloatingActionButton? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onEvenSelectedListener = context as? OnEvenSelectedListener
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,14 +57,17 @@ class EventListFragment : Fragment(), OnEventClickListener {
         recyclerView.adapter = EventItemRecyclerViewAdapter(eventListViewModel.events, this)
     }
 
-    companion object {
+    override fun onDetach() {
+        super.onDetach()
+        onEvenSelectedListener = null
+    }
 
+    companion object {
         @JvmStatic
         fun newInstance() = EventListFragment()
     }
 
     override fun onEventClicked(id: UUID, title: String) {
-        val fragment = EventFragment.newInstance(id.toString(), title)
-        activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.fragment_container, fragment)?.commit()
+        onEvenSelectedListener?.onEventSelected(id.toString(), title)
     }
 }

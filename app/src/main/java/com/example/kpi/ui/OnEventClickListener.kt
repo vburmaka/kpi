@@ -1,4 +1,4 @@
-package com.example.kpi
+package com.example.kpi.ui
 
 import java.util.UUID
 

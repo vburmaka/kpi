@@ -1,8 +1,7 @@
 package com.example.kpi.core
 
 import android.app.Application
-import com.example.kpi.EventRepository
-import com.example.kpi.EventRepositoryImpl
+import com.example.kpi.data.EventRepositoryImpl
 
 class EventsApplication : Application() {
 
