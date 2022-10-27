@@ -2,10 +2,10 @@ package com.example.kpi.core
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.kpi.ui.EventListFragment
+import com.example.kpi.ui.event.EventListFragment
 import com.example.kpi.R
-import com.example.kpi.ui.EventFragment
-import com.example.kpi.ui.OnEvenSelectedListener
+import com.example.kpi.ui.event.EventFragment
+import com.example.kpi.ui.event.OnEvenSelectedListener
 
 class MainActivity : AppCompatActivity(), OnEvenSelectedListener {
 

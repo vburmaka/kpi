@@ -2,7 +2,7 @@ package com.example.kpi.core
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.kpi.ui.EventListViewModel
+import com.example.kpi.ui.event.EventListViewModel
 
 class EventRepositoryViewModelFactory(private val repository: EventRepository) : ViewModelProvider.Factory {
 

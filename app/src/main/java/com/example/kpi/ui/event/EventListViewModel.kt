@@ -1,4 +1,4 @@
-package com.example.kpi.ui
+package com.example.kpi.ui.event
 
 import androidx.lifecycle.ViewModel
 import com.example.kpi.core.EventRepository

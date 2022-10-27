@@ -1,4 +1,4 @@
-package com.example.kpi.ui
+package com.example.kpi.ui.event
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -10,12 +10,15 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import com.example.kpi.R
+import com.example.kpi.ui.datepicker.DatePickerFragment
+import com.example.kpi.ui.datepicker.OnDateSelectedListener
 import java.util.*
 
 private const val ARG_PARAM_ID = "param1"
 private const val ARG_PARAM_TITLE = "param2"
+private const val DIALOG_DATE = "DialogDate"
 
-class EventFragment : Fragment() {
+class EventFragment : Fragment(), OnDateSelectedListener {
 
     private lateinit var titleEditText: EditText
     private lateinit var dateButton: Button
@@ -44,7 +47,9 @@ class EventFragment : Fragment() {
 
         dateButton.setOnClickListener(object : OnClickListener{
             override fun onClick(p0: View?) {
-                dateButton.text = "test"
+                DatePickerFragment.newInstance(Date()).apply {
+                    show(this@EventFragment.childFragmentManager, DIALOG_DATE)
+                }
             }
         })
 
@@ -62,5 +67,19 @@ class EventFragment : Fragment() {
                 }
             }
         }
+    }
+
+    override fun onDateSelected(date: Date) {
+        saveDate(date)
+        updateUI()
+        dateButton.text = date.toString()
+    }
+
+    private fun updateUI() {
+
+    }
+
+    private fun saveDate(date: Date) {
+
     }
 }

@@ -1,4 +1,4 @@
-package com.example.kpi.ui
+package com.example.kpi.ui.event
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
@@ -6,7 +6,6 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import com.example.kpi.databinding.FragmentItemBinding
 import com.example.kpi.models.EventModel
 
